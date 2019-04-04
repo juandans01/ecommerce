@@ -137,7 +137,7 @@ export default class Products extends Component {
         <Banner>
           <BannerImage/>
           <BannerTitle>Electronics</BannerTitle>
-        </Banner>
+        </Banner>        
         { this.state.products.length > 0 && (
           <React.Fragment>
             <Filters

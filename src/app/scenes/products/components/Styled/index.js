@@ -19,7 +19,7 @@ export const BannerTitle = styled.div`
 `
 
 export const Banner = styled.div`
-  position: relative;  
+  position: relative;
 `
 
 export const List = styled.div`

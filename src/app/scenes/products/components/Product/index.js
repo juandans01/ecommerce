@@ -1,11 +1,28 @@
 import React, { Component } from 'react'
-import { Wrapper, Img, Category, Name } from './components/Styled'
+import axios from 'axios'
+import { connect } from 'react-redux' 
+import { fetchUser } from '../../../../redux/actions/auth'
+import { Wrapper, Img, Category, Name, AbsoluteButton, Points, Button } from './components/Styled'
+import Coin from '../../../../assets/coin.svg'
 
-export default class Product extends Component {
+class Product extends Component {
+
+  redeemProduct = async() => {
+    try {      
+      const data = {
+        productId: this.props.data._id
+      }
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/redeem`, data)
+      console.log('here')
+      this.props.fetchUser()
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   render(){
     return (
-      <Wrapper>
+      <Wrapper>        
         <Img
           src={this.props.data.img.url}
         />
@@ -16,11 +33,31 @@ export default class Product extends Component {
           <Name>
             {this.props.data.name}
           </Name>
-        </div>
-        <div>
-          { this.props.data.cost}
-        </div>
+        </div>        
+        <AbsoluteButton>
+          <Points>
+            { this.props.data.cost }
+            <img
+              src={Coin}
+              alt='coin'
+            />
+          </Points>
+          <Button onClick={this.redeemProduct}>
+            Redeem now
+          </Button>  
+        </AbsoluteButton>      
       </Wrapper>
     )
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchUser: () => dispatch(fetchUser())
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Product)

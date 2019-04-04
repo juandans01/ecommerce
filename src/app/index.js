@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux'
 import { ThemeProvider } from 'styled-components'
-import Header from './components/Header'
-import GlobalStyle from './components/GlobalStyle'
+import Site from './components/Site'
 import theme from './config/theme'
 import axios from 'axios'
-
-//Scenes
-import Products from './scenes/products'
+import store from './redux/store'
 
 axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.REACT_APP_AERO_TOKEN}`
 
@@ -14,13 +12,11 @@ export default class App extends Component {
 
   render() {
     return (
-      <ThemeProvider theme={theme}>
-        <div>
-          <GlobalStyle/>
-          <Header/>
-          <Products/>
-        </div>
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <Site/>
+        </ThemeProvider>
+      </Provider>
     )
   }
 }
